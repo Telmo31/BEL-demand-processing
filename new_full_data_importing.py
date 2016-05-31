@@ -23,9 +23,9 @@ import zipfile
 
 
 
-def which_day(table_identifier, date_indentifier):
+def which_day(table_identifier, date_snapshot):
 
-	date_snapshot = datetime.strptime(date_indentifier, '%y%m%d')
+	
 	a = datetime.strptime(table_identifier[3:9], '%y%m%d')
 	delta =  (a - date_snapshot).days
 
@@ -89,7 +89,7 @@ def check_leg_line(inputleg_file):
 			#checks if table exists, if not, create table
 			flight_identifier = airport + aux[5] + aux[2]
 
-			delta = which_day(flight_identifier, "150601")
+			delta = which_day(flight_identifier, datetime.strptime(file[10:19], '%d%b%Y'))
 
 			if delta == -1:
 				continue
