@@ -68,6 +68,10 @@ def which_route(first_city, second_city):
 
 
 def check_leg_line(inputleg_file):
+
+	output_adress = "C:\\Users\\L00047\\Documents\\Output1"
+
+
 	#Breaks the information in a line into a list
 	for line in inputleg_file:
 		line_decoded = line.decode("utf-8")
@@ -90,8 +94,8 @@ def check_leg_line(inputleg_file):
 			if delta == -1:
 				continue
 
-			if (flight_identifier +".csv") in os.listdir("C:\\Users\\Telmo\\Desktop\\Python\\Reports SN\\data_flights"):
-				data_df = pd.read_csv('C:\\Users\\Telmo\\Desktop\\Python\\Reports SN\\data_flights\\' + flight_identifier +".csv")
+			if (flight_identifier +".csv") in os.listdir(output_adress):
+				data_df = pd.read_csv(output_adress + '\\' + flight_identifier +".csv")
 
 			else:
 				data_df = pd.DataFrame(columns= fares)
@@ -143,7 +147,9 @@ def find_zipfiles(folder_adress):
 all_fares = "J,C,D,Z,P,I,R,O,Y,B,M,U,H,Q,V,W,S,T,E,L,K,N,G,X,A"
 fares = all_fares.split(',')
 
-zipfiles_path = "C:\\Users\\Telmo\\Desktop\\Python\\Reports SN\\Daily Bookings"
+#zipfiles_path = "C:\\Users\\Telmo\\Desktop\\Python\\Reports SN\\Daily Bookings"
+zipfiles_path = "U:\\REV_MNGT\\OR_Unit\\BackUpNightlyFiles"
+ 
 
 fares.append("days_to_departure")
 accumlated_data = []
