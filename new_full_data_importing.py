@@ -10,11 +10,9 @@ Created on Wed May 11 09:11:30 2016
 
 
 #Import libraries
-#psycopg2: SQL connector library
 #os: methods to check files in a directory
 #datetime:date processing
 #numpy and panda for dataframes
-import psycopg2
 import os
 from datetime import datetime
 import numpy as np 
@@ -106,6 +104,12 @@ def check_leg_line(inputleg_file, zfilename):
 
 			if delta == -1:
 				continue
+			if aux[2] == 'O' or aux[2] == 'A':
+				continue
+			if aux[2] == 'G':
+				if len(accumlated_data) == 20:
+					accumlated_data.append(0)
+
 
 			accumlated_data.append(int(aux[5]))
 		
@@ -144,7 +148,7 @@ def find_zipfiles(folder_adress):
 
 
 
-all_fares = "J,C,D,Z,P,I,R,O,Y,B,M,U,H,Q,V,W,S,T,E,L,K,N,G,X,A"
+all_fares = "J,C,D,Z,P,I,R,Y,B,M,U,H,Q,V,W,S,T,E,L,K,N,G,X"
 fares = all_fares.split(',')
 
 #zipfiles_path = "C:\\Users\\Telmo\\Desktop\\Python\\Reports SN\\Daily Bookings"
@@ -161,60 +165,3 @@ accumlated_data = []
 find_zipfiles(zipfiles_path)
 
 
-# #Loops through all the leg files in a directory
-# for file in os.listdir("C:\\Users\\Telmo\\Desktop\\Python\\Reports SN\\Daily Bookings"):
-# 	if file.endswith(".LEG"):
-
-
-# 		#Opens an individual file
-# 		with open('C:\\Users\\Telmo\\Desktop\\Python\\Reports SN\\Daily Bookings\\' + file) as inputfile:
-# 			#Loops through the lines of the file
-
-# 			for line in inputfile:
-# 				#Breaks the information in a line into a list
-# 				aux = line.strip().split(',')
-				
-# 				#if the line starts with 01 it will have the flight information
-# 				if aux[0] == '01':
-					
-
-# 					airport = which_route(aux[3].strip(), aux[4].strip())
-# 					if airport == 'na':
-# 						inputfile.close()
-# 						break
-					
-# 					#checks if table exists, if not, create table
-# 					flight_identifier = airport + aux[5] + aux[2]
-
-# 					delta = which_day(flight_identifier, "150601")
-
-# 					if delta == -1:
-# 						continue
-
-# 					if (flight_identifier +".csv") in os.listdir("C:\\Users\\Telmo\\Desktop\\Python\\Reports SN\\data_flights"):
-# 						data_df = pd.read_csv('C:\\Users\\Telmo\\Desktop\\Python\\Reports SN\\data_flights\\' + flight_identifier +".csv")
-
-# 					else:
-# 						data_df = pd.DataFrame(columns= fares)
-
-
-
-# 				if aux[0] == '03':
-
-# 					if delta == -1:
-# 							continue
-
-# 					accumlated_data.append(int(aux[5]))
-# 					#method to fill the table
-
-# 				if aux[0] == '02' and aux[1] == 'Y':
-
-# 					if delta == -1:
-# 							continue
-# 					fill_table(flight_identifier , accumlated_data, delta , data_df, fares)
-# 					del accumlated_data[:]
-
-
-
-# 		#Close the file
-# 		inputfile.close()
