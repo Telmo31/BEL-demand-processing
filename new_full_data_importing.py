@@ -67,7 +67,7 @@ def which_route(first_city, second_city):
 	return 'na'
 
 
-def check_leg_line(inputleg_file):
+def check_leg_line(inputleg_file, zfilename):
 
 	output_adress = "C:\\Users\\L00047\\Documents\\Output1"
 
@@ -89,7 +89,7 @@ def check_leg_line(inputleg_file):
 			#checks if table exists, if not, create table
 			flight_identifier = airport + aux[5] + aux[2]
 
-			delta = which_day(flight_identifier, datetime.strptime(file[10:19], '%d%b%Y'))
+			delta = which_day(flight_identifier, datetime.strptime(zfilename[10:19], '%d%b%Y'))
 
 			if delta == -1:
 				continue
@@ -121,11 +121,11 @@ def check_leg_line(inputleg_file):
 
 
 
-def read_leg_file(zip_pointer):
+def read_leg_file(zip_pointer, zfilename):
 	for legfile in zip_pointer.namelist():
 		if legfile.endswith(".LEG"):
 			with zip_pointer.open(legfile) as inputlegfile:
-				check_leg_line(inputlegfile)
+				check_leg_line(inputlegfile, zfilename)
 			inputlegfile.close()
 
 
@@ -137,7 +137,7 @@ def find_zipfiles(folder_adress):
 
 		if file.endswith(".zip"):
 			zipf = zipfile.ZipFile(folder_adress + '\\' + file)
-			read_leg_file(zipf)
+			read_leg_file(zipf, file)
 
 
 
